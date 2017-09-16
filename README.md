@@ -1,10 +1,10 @@
 This a simple example of how one can use type erasure to adapt an interface
 onto a large number of different types, without having to use inheritance. 
-It is based on ideas from Sean Parent originall from his talk called 
+It is based on ideas from Sean Parent originally from his talk called 
 Inheritance is the Base Class of Evil 
 https://channel9.msdn.com/Events/GoingNative/2013/Inheritance-Is-The-Base-Class-of-Evil
 
-This is a techinique used in MPQC4 to generate blocks of atoms or shells that
+This is a technique used in MPQC4 to generate blocks of atoms or shells that
 can then be converted into blocks of a tensor. The main goal is to end up with something like a std::vector<std::vector<Atom>> where each blocks in a dimension of the tensor are blocked such that { functions from atom in cluster 0 , functions from atom in cluster 1 , . . . , functions from atoms in cluster N}
 
 The motivating reason for MPQC to use this type erasing like interface instead of something more simple is to have the ability for combining clustering steps in a composable fashion such as 
