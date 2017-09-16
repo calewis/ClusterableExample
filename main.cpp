@@ -25,7 +25,7 @@ Vector center(Atom const& a) {
 }
 
 Vector center(std::vector<Atom> const& a_vec) {
-  Vector cent(3);  // Center of charge
+  Vector cent(3);
   cent.setZero();
 
   for (auto const& a : a_vec) {
@@ -36,7 +36,7 @@ Vector center(std::vector<Atom> const& a_vec) {
 }
 
 Vector center(std::vector<std::vector<Atom>> const& meta_vec) {
-  Vector cent(3);  // Center of charge
+  Vector cent(3);  
   cent.setZero();
 
   for (auto const& a_vec : meta_vec) {
