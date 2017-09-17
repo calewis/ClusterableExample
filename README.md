@@ -24,17 +24,40 @@ I am sure that this example needs some work after all I made it from scratch
 over the weekend, but hopefully this gives you some idea of the features of C++
 that I have experience with and the types of programming that went into MPQC4.
 
-To compile main.cpp I used 
+# Executables
+## main.cpp
+main.cpp gives an example of how we can make clusterable type that can capture
+a bunch of differnt types and put all of them in a vector while still having
+access to certain information about each element. 
+
+## kmeans.cpp
+Is an example that shows how this might be useful.  It first clusters a molecule
+(provided in an xyz file) into a large number of small clusters.  Then since
+each cluster can also be type erased into a clusterable we can take these small
+clusters and cluster them into large clusters, finally collapsing to atoms and
+printing the members of the clusters. 
+
+One long term goal (not implemented here, but the idea should be apparent) is
+is to allow for a hierarchy of clustering which could for example allow for
+efficient formation of H-matrices using functions centered on Atoms or just
+allow for hierarchical blocks of functions providing a way to minimize
+replicated meta data in a sparse tensor data structure. 
+
+## Compiling
+To compile main.cpp use
 
 ```
 clang++ -std=c++14 -I/path/to/eigen3 -I/path/to/libint/include main.cpp
 ```
 
-To compile kmeans.cpp I used 
+To compile kmeans.cpp use (-O2 because otherwise the large water drop can take
+a few seconds.
 
 ```
 clang++ -std=c++14 -O2 -I/path/to/eigen3 -I/path/to/libint/include kmeans.cpp
 ```
+
+## Running Kmean example
 
 To run kmeans.cpp I used 
 
@@ -42,7 +65,9 @@ To run kmeans.cpp I used
 ./a.out Azithromycin.xyz
 ```
 
-or
+or (The clustering code does not take care to optimize for copies and
+allocations so a big molecule can be a little slow.)
+
 ```
 ./a.out big_water_drop.xyz
 ```
