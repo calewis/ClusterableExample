@@ -26,8 +26,8 @@ that I have experience with and the types of programming that went into MPQC4.
 
 # Executables
 ## main.cpp
-main.cpp gives an example of how we can make clusterable type that can capture
-a bunch of differnt types and put all of them in a vector while still having
+main.cpp gives an example of how we can make a clusterable type that can capture
+a bunch of different types and put all of them in a vector while still having
 access to certain information about each element. 
 
 ## kmeans.cpp
@@ -43,6 +43,13 @@ efficient formation of H-matrices using functions centered on Atoms or just
 allow for hierarchical blocks of functions providing a way to minimize
 replicated meta data in a sparse tensor data structure. 
 
+## Dependencies 
+
+* Eigen 3: Just for a nice already implemented vector
+* Libint2: https://github.com/evaleev/libint an integral engine library
+  developed in our research group that already has an atom and a way to read
+  xyz files. Libint2 can be a bit tricky to install so email for help if needed.
+
 ## Compiling
 To compile main.cpp use
 
@@ -51,7 +58,7 @@ clang++ -std=c++14 -I/path/to/eigen3 -I/path/to/libint/include main.cpp
 ```
 
 To compile kmeans.cpp use (-O2 because otherwise the large water drop can take
-a few seconds.
+a few seconds).
 
 ```
 clang++ -std=c++14 -O2 -I/path/to/eigen3 -I/path/to/libint/include kmeans.cpp
