@@ -73,7 +73,7 @@ class ClusterModel : public ClusterConcept<U> {
  public:
   ClusterModel(T t) : element_(std::move(t)) {}
 
-  // Need to proved the function Vector center(T const& t); for each type T
+  // Need to provide the function Vector center(T const& t); for each type T
   Vector center_() const override final { return center(element_); }
 
   std::type_index type_() const override final {
