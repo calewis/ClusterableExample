@@ -61,7 +61,8 @@ class ClusterConcept {
   virtual std::vector<U> collapse_() const = 0;
 };
 
-/* ClusterModel is the type that actually holds our T that has a center and can
+/*
+ * ClusterModel is the type that actually holds our T that has a center and can
  * be collapsed to a U.
  */
 template <typename T, typename U>
