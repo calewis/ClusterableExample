@@ -18,7 +18,7 @@ std::vector<std::vector<Atom>> clustered_atoms = kmeans(group_by_charge(clustera
 
 Where something like the group_by_charge function will first create groups of
 atoms that have the same charge and will then kmeans cluster those groups in
-how ever many clusters were specified. 
+to how ever many clusters were specified. 
 
 I am sure that this example needs some work after all I made it from scratch
 over the weekend, but hopefully this gives you some idea of the features of C++
