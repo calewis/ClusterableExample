@@ -29,3 +29,20 @@ To compile main.cpp I used
 ```
 clang++ -std=c++14 -I/path/to/eigen3 -I/path/to/libint/include main.cpp
 ```
+
+To compile kmeans.cpp I used 
+
+```
+clang++ -std=c++14 -O2 -I/path/to/eigen3 -I/path/to/libint/include kmeans.cpp
+```
+
+To run kmeans.cpp I used 
+
+```
+./a.out Azithromycin.xyz
+```
+
+or
+```
+./a.out big_water_drop.xyz
+```
