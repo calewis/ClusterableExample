@@ -8,15 +8,13 @@
 #include <iostream>
 
 namespace clustering {
-  template<>
-    std::vector<Atom> collapse<Atom, Cluster<Atom>>(Cluster<Atom> const& c){
-      return c.collapse();
-    }
-
-  auto center(Cluster<Atom> const& c){
-    return c.center();
-  }
+template <>
+std::vector<Atom> collapse<Atom, Cluster<Atom>>(Cluster<Atom> const& c) {
+  return c.collapse();
 }
+
+auto center(Cluster<Atom> const& c) { return c.center(); }
+}  // namespace clustering
 
 auto atom_to_clusterables(std::vector<Atom> const& vs) {
   std::vector<clustering::Clusterable<Atom>> out;
@@ -45,16 +43,16 @@ int main(int argc, char** argv) {
 
   auto clusterables = atom_to_clusterables(atoms);
 
-  auto n_small_clusters = std::max(int(natoms)/2, 1);
+  auto n_small_clusters = std::max(int(natoms) / 2, 1);
   auto magic_seed = 42;
   clustering::Kmeans kmeans_small(n_small_clusters, magic_seed);
 
   auto small_clusters = kmeans_small(clusterables);
 
   auto n = 1;
-  for(auto const& c : small_clusters){
+  for (auto const& c : small_clusters) {
     std::cout << "Cluster " << n << " has atoms:\n";
-    for(auto atom : c.collapse()){
+    for (auto atom : c.collapse()) {
       std::cout << "\t" << center(atom).transpose() << "\n";
     }
     std::cout << std::flush;
@@ -65,16 +63,16 @@ int main(int argc, char** argv) {
   for (auto const& cluster : small_clusters) {
     meta_clusters.push_back(cluster);
   }
-  
-  if(meta_clusters.size() > 10){
+
+  if (meta_clusters.size() > 10) {
     std::cout << "\n\nClustering our small clusters\n";
     clustering::Kmeans kmeans_big(4, magic_seed);
     auto clusters_of_clusters = kmeans_big(meta_clusters);
 
     auto n = 1;
-    for(auto const& c : clusters_of_clusters){
+    for (auto const& c : clusters_of_clusters) {
       std::cout << "Cluster " << n << " has atoms:\n";
-      for(auto atom : c.collapse()){
+      for (auto atom : c.collapse()) {
         std::cout << "\t" << center(atom).transpose() << "\n";
       }
       std::cout << std::flush;

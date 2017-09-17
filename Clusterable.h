@@ -90,8 +90,8 @@ class ClusterModel : public ClusterConcept<U> {
 /*
  * Clusterable is the class that actually holds the type erased object inside a
  * shared_ptr.  This is nice because we can now do things like
- * vector<Clusterable<U>> where every Clusterable an represent a different type.
- * Think of this as being similar to boost any except that the types must
+ * vector<Clusterable<U>> where every Clusterable can represent a different type.
+ * Think of this as being similar to boost::any except that the types must
  * provide a call to collapse<U> and also much provide a center function to
  * retrieve a vector representing the types center.
  *
