@@ -1,9 +1,16 @@
+# Top level description
 This a simple example of how one can use type erasure to adapt an interface
 onto a large number of different types, without having to use inheritance. 
 It is based on ideas from Sean Parent originally from his talk called 
 Inheritance is the Base Class of Evil 
 https://channel9.msdn.com/Events/GoingNative/2013/Inheritance-Is-The-Base-Class-of-Evil
 
+## Update
+It is now possible to add visitors to the types stored in the clusterables by
+using an Acyclic Visitor,  an example of how to do this in now in main.cpp, but
+is not currently commented. 
+
+### More Detail
 This is a technique used in MPQC4 to generate blocks of atoms or shells that
 can then be converted into blocks of a tensor. The main goal is to end up with something like a std::vector<std::vector<Atom>> where each blocks in a dimension of the tensor are blocked such that { functions from atom in cluster 0 , functions from atom in cluster 1 , . . . , functions from atoms in cluster N}
 
