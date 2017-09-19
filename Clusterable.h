@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#include <boost/core/demangle.hpp>
+#include <boost/variant.hpp>
+
 #include <memory>
 #include <typeindex>
 #include <typeinfo>
@@ -40,6 +43,18 @@ auto collapse(std::vector<T, A> const& ts) {
   return out;
 }
 
+class ClusterConceptVisitor {
+ public:
+  virtual ~ClusterConceptVisitor() = 0;
+};
+inline ClusterConceptVisitor::~ClusterConceptVisitor() {}
+
+template <typename T>
+class ClusterModelVisitor {
+ public:
+  virtual void visit(T const&) = 0;
+};
+
 /* Here is where the fun begins
  *
  * Let's say that you want some polymorphic like behavior such that a bunch of
@@ -59,6 +74,8 @@ class ClusterConcept {
   virtual Vector center_() const = 0;
   virtual std::type_index type_() const = 0;
   virtual std::vector<U> collapse_() const = 0;
+
+  virtual void accept_(ClusterConceptVisitor& ccv) const = 0;
 };
 
 /*
@@ -80,6 +97,12 @@ class ClusterModel : public ClusterConcept<U> {
     return std::type_index(typeid(element_));
   }
 
+  void accept_(ClusterConceptVisitor& ccv) const override final {
+    if (auto ptr_ = dynamic_cast<ClusterModelVisitor<T>*>(&ccv)) {
+      return ptr_->visit(element_);
+    }
+  }
+
   // Need to proved the function std::vector<U> collapse<U>(T const& t); for
   // each type T a few have been given above.
   std::vector<U> collapse_() const override final {
@@ -88,16 +111,16 @@ class ClusterModel : public ClusterConcept<U> {
 };
 
 /*
- * Clusterable is the class that actually holds the type erased object inside a
- * shared_ptr.  This is nice because we can now do things like
- * vector<Clusterable<U>> where every Clusterable can represent a different type.
- * Think of this as being similar to boost::any except that the types must
- * provide a call to collapse<U> and also much provide a center function to
- * retrieve a vector representing the types center.
+ * Clusterable is the class that actually holds the type erased object inside
+ * a shared_ptr.  This is nice because we can now do things like
+ * vector<Clusterable<U>> where every Clusterable can represent a different
+ * type. Think of this as being similar to boost::any except that the types
+ * must provide a call to collapse<U> and also much provide a center function
+ * to retrieve a vector representing the types center.
  *
  * I left all of the compiler generated functions to be defaulted, although
- * that means that element_ptr will always be shallow copied.  It is trivial to
- * add a clone method for deep copies though.
+ * that means that element_ptr will always be shallow copied.  It is trivial
+ * to add a clone method for deep copies though.
  */
 template <typename U>
 class Clusterable {
@@ -115,6 +138,8 @@ class Clusterable {
   Vector center() const { return element_ptr_->center_(); }
   std::type_index type() const { return element_ptr_->type_(); }
   std::vector<U> collapse() const { return element_ptr_->collapse_(); }
+
+  void accept(ClusterConceptVisitor& ccv) const { element_ptr_->accept_(ccv); }
 };
 
 }  // namespace clustering
